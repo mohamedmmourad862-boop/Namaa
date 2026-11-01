@@ -514,20 +514,36 @@ tr.grp:first-child td{border-top:0}
 :root[data-ui="calm"] .ov-k:first-child .v{color:#FFFFFF;font-size:1.6rem}
 :root[data-ui="calm"] .ov-k:nth-child(4){display:none}
 :root[data-ui="calm"] .ov-k{background:var(--bg);border-radius:22px}
-/* the bottom bar: Home, Assets, Zakat, (+), Spending, Reports, Alerts — three on each side of the + */
+/* the bottom bar on phones: Home and Spending either side of the +, which opens the wheel with every section */
 @media (max-width:640px){
+  :root[data-ui="calm"] .bnav button[data-goto="assets"],:root[data-ui="calm"] .bnav button[data-goto="zakat"],
+  :root[data-ui="calm"] .bnav button[data-goto="reports"],:root[data-ui="calm"] .bnav button[data-goto="alerts"]{display:none}
   :root[data-ui="calm"] .bnav button[data-goto="home"]{order:1}
-  :root[data-ui="calm"] .bnav button[data-goto="assets"]{order:2}
-  :root[data-ui="calm"] .bnav button[data-goto="zakat"]{order:3;margin-inline-end:38px}
-  :root[data-ui="calm"] .bnav button[data-goto="money"]{order:4;margin-inline-start:38px}
-  :root[data-ui="calm"] .bnav button[data-goto="reports"]{order:5;margin-inline-end:0}
-  :root[data-ui="calm"] .bnav button[data-goto="alerts"]{order:6}
-  :root[data-ui="calm"] .bnav{justify-content:center;padding-inline:6px}
-  :root[data-ui="calm"] .bnav button{font-size:.64rem;flex:1 1 0;min-width:0;white-space:nowrap}
-  :root[data-ui="calm"] .bnav svg{width:22px;height:22px}
+  :root[data-ui="calm"] .bnav button[data-goto="money"]{order:2}
+  :root[data-ui="calm"] .bnav{justify-content:space-between;padding-inline:max(24px,env(safe-area-inset-left,0px))}
+  :root[data-ui="calm"] .bnav button{font-size:.7rem;flex:0 0 84px}
   :root[data-ui="calm"] .bnav{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
   :root[data-ui="calm"] .fab{border-radius:22px;bottom:calc(36px + env(safe-area-inset-bottom,0px))}
 }
+
+/* the wheel: a half circle of buttons that fans out of the + (Add on top, the sections around it) */
+.wheel{position:fixed;inset:0;z-index:28;visibility:hidden}
+.wheel.open{visibility:visible}
+.wheel-bg{position:absolute;inset:0;background:rgba(5,18,18,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;transition:opacity .22s}
+.wheel.open .wheel-bg{opacity:1}
+.wheel-it{position:absolute;left:0;top:0;width:68px;display:grid;justify-items:center;gap:5px;border:0;background:none;padding:0;
+  color:#FFFFFF;font:600 .72rem var(--body);cursor:pointer;opacity:0;transform:translate(var(--x0),var(--y0)) scale(.3);
+  transition:transform .34s cubic-bezier(.3,1.35,.5,1) var(--d,0s),opacity .18s var(--d,0s)}
+.wheel.open .wheel-it{opacity:1;transform:translate(var(--x),var(--y)) scale(1)}
+.wheel-it .ic{position:relative;width:54px;height:54px;border-radius:50%;background:var(--surface);color:var(--accent);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.28)}
+.wheel-it svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.wheel-it[aria-current=page] .ic{background:var(--pill);box-shadow:0 0 0 2px var(--accent),0 6px 18px rgba(0,0,0,.28)}
+.wheel-it.add .ic{width:60px;height:60px;background:var(--fab);color:#FFFFFF}
+.wheel-it .badge{position:absolute;top:-3px;inset-inline-end:-3px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--down);color:#fff;font-size:.66rem;display:grid;place-items:center}
+:root.wheel-on .fab{z-index:29}
+.fab svg{transition:transform .25s}
+:root.wheel-on .fab svg{transform:rotate(45deg)}
+@media (prefers-reduced-motion:reduce){ .wheel-it,.wheel-bg,.fab svg{transition:none} }
 
 /* four quick actions under the net worth (only in the trial looks) */
 .qacts{display:none}
@@ -1950,11 +1966,12 @@ const BROKERS = [
 /* APP_BUILD counts every release and goes up with CACHE in sw.js (wealth-shell-v<build>); it's what update checks compare.
    APP_VERSION is what people see, major.minor[.patch]: a new feature raises the minor (2.1), a fix only the patch (2.0.1),
    a whole new look the major (2.0) */
-const APP_BUILD = 50, APP_VERSION = '2.5.0', APP_DATE = '2026-11-01';
+const APP_BUILD = 51, APP_VERSION = '2.6.0', APP_DATE = '2026-11-01';
 // what this release brought: new features and fixes, each [Arabic, English]. Shown as a popup on the first opening
 // after the update, kept in the bell, and from Settings → What's new
 const WHATS_NEW = {
   feat: [
+    ['🎡 عجلة الأقسام: دوس على زرار + في البار يفتحلك نص دايرة فيها كل الأقسام (الرئيسية، الأصول، الزكاة، المصاريف، التقارير، التنبيهات) و«إضافة» فوق خالص. والبار بقى أهدى: الرئيسية والمصاريف بس.', '🎡 The section wheel: tap + in the bar for a half circle with every section (Home, Assets, Zakat, Spending, Reports, Alerts) and Add on top. The bar itself is calmer: just Home and Spending.'],
     ['📅 استثناء من المصروف اليومي: الإيجار والأقساط والجمعية مبقوش بيتحسبوا في «صرفت النهارده»، بيتخصموا من ميزانية الشهر بس. تقدر تختار أي فئة من «تعديل الميزانيات»، أو تستثني مصروف واحد وانت بتسجّله.', '📅 Left out of daily spending: rent, instalments and savings circles no longer count in "spent today"; they only come out of the month\'s budget. Pick any category in Edit budgets, or leave out a single expense as you record it.'],
     ['🧭 الزكاة والتنبيهات بقوا في البار اللي تحت: الرئيسية، الأصول، الزكاة، +، المصاريف، التقارير، التنبيهات.', '🧭 Zakat and Alerts are now in the bottom bar: Home, Assets, Zakat, +, Spending, Reports, Alerts.'],
     ['🕌 زرار «أدّيت الزكاة» في صفحة الزكاة: سجّل المبلغ اللي أخرجته والحساب اللي اتخصم منه، فالزكاة المستحقة تبقى صفر ويبدأ الحول الجاي لوحده. والمبلغ بيتسجّل في «صدقة وزكاة» من غير ما يأثر على ميزانيتك الشهرية.', '🕌 A "Zakat paid" button on the Zakat page: record what you paid and the account it came from, and zakat due goes to zero while the next zakat year starts on its own. It\'s recorded under "Charity & zakat" without touching your monthly budget.'],
@@ -4056,6 +4073,44 @@ document.addEventListener('keydown', e=>{
 });
 document.querySelectorAll('#bnav [data-goto]').forEach((b, i)=>b.setAttribute('aria-keyshortcuts', String(i + 1)));
 
+/* the wheel (phones, 2.0 look): the + fans out a half circle — Add on top, the six sections around it in the
+   bar's reading order. Built on each opening from the bar's own buttons, so labels follow the language. */
+const WHEEL_ORDER = ['home','assets','zakat','add','money','reports','alerts'];
+const wheelMode = () => document.documentElement.dataset.ui==='calm' && matchMedia('(max-width:640px)').matches;
+const wheel = document.createElement('div');
+wheel.className = 'wheel'; wheel.id = 'wheel'; wheel.setAttribute('role', 'menu');
+document.body.appendChild(wheel);
+function toggleWheel(on = !wheel.classList.contains('open')){
+  if(on) buildWheel();
+  wheel.classList.toggle('open', on);
+  document.documentElement.classList.toggle('wheel-on', on);
+  document.getElementById('fab').setAttribute('aria-expanded', on);
+  buzz(6);
+}
+function buildWheel(){
+  const f = document.getElementById('fab').getBoundingClientRect(), cx = f.left + f.width/2, cy = f.top + f.height/2;
+  const Rx = Math.min(165, innerWidth/2 - 46), Ry = Rx * 1.28, n = WHEEL_ORDER.length, rtl = document.documentElement.dir==='rtl';
+  const pending = state.pending.length;
+  wheel.innerHTML = `<div class="wheel-bg" data-wheel-close></div>` + WHEEL_ORDER.map((k, i)=>{
+    // an upright half oval lifted clear of the bar, first item at the reading start (right in Arabic), Add straight up
+    const a = Math.PI * i / (n - 1), x = cx + (rtl ? 1 : -1) * Rx * Math.cos(a), y = cy - 74 - Ry * Math.sin(a);
+    const pos = `--x:${x - 34}px;--y:${y - 30}px;--x0:${cx - 34}px;--y0:${cy - 30}px;--d:${Math.abs(i - (n-1)/2) * 0.03}s`;
+    if(k==='add') return `<button type="button" class="wheel-it add" role="menuitem" data-wheel="add" style="${pos}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>${L('إضافة','Add')}</button>`;
+    const b = document.querySelector(`#bnav [data-goto="${k}"]`);
+    return `<button type="button" class="wheel-it" role="menuitem" data-wheel="${k}" aria-current="${tab===k ? 'page' : 'false'}" style="${pos}">
+      <span class="ic">${b.querySelector('svg').outerHTML}${k==='money' && pending ? `<span class="badge">${fmt(pending,0)}</span>` : ''}</span>${esc(b.querySelector('span').textContent)}</button>`;
+  }).join('');
+}
+wheel.addEventListener('click', e=>{
+  const k = e.target.closest('[data-wheel]')?.dataset.wheel;
+  if(!k && !e.target.closest('[data-wheel-close]')) return;
+  toggleWheel(false);
+  if(k==='add') openSheet(); else if(k) setTab(k);
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && wheel.classList.contains('open')) toggleWheel(false); });
+// a size change (rotating the phone) closes it rather than leaving it aimed at the old spot
+window.addEventListener('resize', ()=>{ if(wheel.classList.contains('open')) toggleWheel(false); });
+
 /* ---------- quick add sheet ---------- */
 const sheet = document.getElementById('sheet'), sheetBody = document.getElementById('sheet-body');
 const QTYPES = [
@@ -4125,7 +4180,7 @@ function openSheet(sec, done){
   if(!sheet.open) sheet.showModal();
   buzz(6);
 }
-document.getElementById('fab').addEventListener('click', ()=>openSheet());
+document.getElementById('fab').addEventListener('click', ()=>wheelMode() ? toggleWheel() : openSheet());
 document.getElementById('sheet-close').addEventListener('click', ()=>sheet.close());
 sheet.addEventListener('click', e=>{
   if(e.target===sheet) return sheet.close();
