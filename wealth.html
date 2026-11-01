@@ -459,23 +459,10 @@ tr.grp:first-child td{border-top:0}
 .ch-a{flex:1;min-width:0;background:var(--surface);border:0;border-radius:20px!important;padding:14px;display:flex;flex-direction:column;gap:4px;text-align:start;color:var(--fg);font-size:.76rem}
 .ch-a i{width:10px;height:10px;border-radius:5px}
 .ch-a b{font:600 .95rem var(--display)}
-.ch-more{display:flex;gap:10px;margin-top:10px}
 /* the rows may shrink below their content, so a large phone font wraps the text instead of pushing cards off screen */
-.ch-ah,.ch-ac,.ch-more{min-width:0;max-width:100%}
-.ch-more b,.ch-more small{overflow-wrap:anywhere}
+.ch-ah,.ch-ac{min-width:0;max-width:100%}
 .ch-a{padding:12px}
 .ch-a b{font-size:min(.95rem,4.2vw);white-space:nowrap}
-.ch-more button{flex:1;min-width:0;border:0;background:var(--surface);border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:start;color:var(--fg);cursor:pointer}
-.ch-more .ic{flex:none;width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--fab);color:#FFFFFF}
-.ch-more .ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ch-more b{display:block;font-size:.92rem;font-weight:700;line-height:1.3}
-.ch-more small{display:block;font-size:.76rem;color:var(--muted);line-height:1.35;margin-top:2px}
-.alerts-link{display:flex;align-items:center;gap:10px;width:100%;border:0;background:var(--surface);border-radius:18px;padding:12px 14px;margin-bottom:12px;color:var(--fg);text-align:start;cursor:pointer}
-.alerts-link .ic{flex:none;width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--fab);color:#FFFFFF}
-.alerts-link .ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.alerts-link span{flex:1}
-.alerts-link small{display:block;font-size:.74rem;color:var(--muted)}
-[dir="ltr"] .alerts-link .chev{transform:scaleX(-1)}
 :root[data-ui="calm"] .qacts .qi{border-radius:18px}
 /* Spending: the summary card with the ring, and the category bars */
 .cs{display:flex;align-items:center;gap:18px;background:var(--bg);border-radius:24px;padding:16px}
@@ -527,15 +514,17 @@ tr.grp:first-child td{border-top:0}
 :root[data-ui="calm"] .ov-k:first-child .v{color:#FFFFFF;font-size:1.6rem}
 :root[data-ui="calm"] .ov-k:nth-child(4){display:none}
 :root[data-ui="calm"] .ov-k{background:var(--bg);border-radius:22px}
-/* the bottom bar in the design's order: Home, Assets, (+), Spending, Reports; Zakat and alerts are on Home */
+/* the bottom bar: Home, Assets, Zakat, (+), Spending, Reports, Alerts — three on each side of the + */
 @media (max-width:640px){
-  :root[data-ui="calm"] .bnav button[data-goto="zakat"],:root[data-ui="calm"] .bnav button[data-goto="alerts"]{display:none}
   :root[data-ui="calm"] .bnav button[data-goto="home"]{order:1}
-  :root[data-ui="calm"] .bnav button[data-goto="assets"]{order:2;margin-inline-end:36px}
-  :root[data-ui="calm"] .bnav button[data-goto="money"]{order:4;margin-inline-start:36px}
+  :root[data-ui="calm"] .bnav button[data-goto="assets"]{order:2}
+  :root[data-ui="calm"] .bnav button[data-goto="zakat"]{order:3;margin-inline-end:38px}
+  :root[data-ui="calm"] .bnav button[data-goto="money"]{order:4;margin-inline-start:38px}
   :root[data-ui="calm"] .bnav button[data-goto="reports"]{order:5;margin-inline-end:0}
-  :root[data-ui="calm"] .bnav{justify-content:center}
-  :root[data-ui="calm"] .bnav button{font-size:.7rem;flex:0 0 66px}
+  :root[data-ui="calm"] .bnav button[data-goto="alerts"]{order:6}
+  :root[data-ui="calm"] .bnav{justify-content:center;padding-inline:6px}
+  :root[data-ui="calm"] .bnav button{font-size:.64rem;flex:1 1 0;min-width:0;white-space:nowrap}
+  :root[data-ui="calm"] .bnav svg{width:22px;height:22px}
   :root[data-ui="calm"] .bnav{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
   :root[data-ui="calm"] .fab{border-radius:22px;bottom:calc(36px + env(safe-area-inset-bottom,0px))}
 }
@@ -1583,7 +1572,6 @@ section.card.collapsed{gap:0}
     <div class="note" data-en="The zakat year (hawl) is one lunar year (354 days) from the day your wealth reaches the nisab. Majority view: if the zakat base drops below the nisab at any point, the year breaks and a new one starts the day it reaches the nisab again. Hanafi view: dips during the year don't matter; zakat is due if the base is at or above the nisab at the year's end, and if it's below, no zakat is due and a new year starts once it reaches the nisab. In both, the page starts the year by itself. Property, cars and other assets for personal use are not included. This is an estimate; for special cases, ask a scholar.">الحول = سنة هجرية (354 يوم) من يوم ما المال يبلغ النصاب. رأي الجمهور: لو الوعاء نزل تحت النصاب في أي وقت الحول بينقطع، وبيبدأ حول جديد يوم ما يرجع للنصاب. رأي الحنفية: نزول المال في نص السنة مش بيأثر، والعبرة بآخر الحول: لو الوعاء فوق النصاب الزكاة واجبة، ولو تحته مفيش زكاة وبيبدأ حول جديد لما يرجع للنصاب. في الحالتين الصفحة بتبدأ الحول لوحدها. العقارات والسيارات والأصول الأخرى للاستخدام مش داخلة في الحساب. الحساب تقريبي، وفي الحالات الخاصة ارجع لأهل العلم.</div>
   </section>
 
-  <button type="button" class="alerts-link" data-tab="assets" data-ch="alerts"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20h4"/></svg></span><span><b data-en="Price alerts">تنبيهات الأسعار</b><small id="alerts-link-sub"></small></span><span aria-hidden="true" class="mu chev">‹</span></button>
   <section class="card" id="sec-gold" data-tab="assets">
     <div class="sec-head"><h2><span class="dot" style="background:var(--gold)"></span><span data-en="Gold">الذهب</span></h2><span class="sec-sum m" id="sum-gold"></span></div>
     <div class="settings">
@@ -1962,11 +1950,13 @@ const BROKERS = [
 /* APP_BUILD counts every release and goes up with CACHE in sw.js (wealth-shell-v<build>); it's what update checks compare.
    APP_VERSION is what people see, major.minor[.patch]: a new feature raises the minor (2.1), a fix only the patch (2.0.1),
    a whole new look the major (2.0) */
-const APP_BUILD = 49, APP_VERSION = '2.4.1', APP_DATE = '2026-10-31';
+const APP_BUILD = 50, APP_VERSION = '2.5.0', APP_DATE = '2026-11-01';
 // what this release brought: new features and fixes, each [Arabic, English]. Shown as a popup on the first opening
 // after the update, kept in the bell, and from Settings → What's new
 const WHATS_NEW = {
   feat: [
+    ['📅 استثناء من المصروف اليومي: الإيجار والأقساط والجمعية مبقوش بيتحسبوا في «صرفت النهارده»، بيتخصموا من ميزانية الشهر بس. تقدر تختار أي فئة من «تعديل الميزانيات»، أو تستثني مصروف واحد وانت بتسجّله.', '📅 Left out of daily spending: rent, instalments and savings circles no longer count in "spent today"; they only come out of the month\'s budget. Pick any category in Edit budgets, or leave out a single expense as you record it.'],
+    ['🧭 الزكاة والتنبيهات بقوا في البار اللي تحت: الرئيسية، الأصول، الزكاة، +، المصاريف، التقارير، التنبيهات.', '🧭 Zakat and Alerts are now in the bottom bar: Home, Assets, Zakat, +, Spending, Reports, Alerts.'],
     ['🕌 زرار «أدّيت الزكاة» في صفحة الزكاة: سجّل المبلغ اللي أخرجته والحساب اللي اتخصم منه، فالزكاة المستحقة تبقى صفر ويبدأ الحول الجاي لوحده. والمبلغ بيتسجّل في «صدقة وزكاة» من غير ما يأثر على ميزانيتك الشهرية.', '🕌 A "Zakat paid" button on the Zakat page: record what you paid and the account it came from, and zakat due goes to zero while the next zakat year starts on its own. It\'s recorded under "Charity & zakat" without touching your monthly budget.'],
     ['📲 إشعارات حتى والتطبيق مقفول: رسايل البنك الجديدة، وتنبيهات الأسعار، ومواعيد الأقساط. فعّلها من الإعدادات ← الإشعارات.', '📲 Notifications even with the app closed: new bank messages, price alerts and instalments. Turn them on in Settings → Notifications.'],
     ['🏠 ميزانيتين منفصلتين: ميزانية للبيت وميزانية ليك. البيت بيتحسب من فئة «مصاريف البيت» (وأي فئة تختارها)، والباقي على ميزانيتك. والمسموح بيه كل يوم من ميزانيتك بس. حطهم من المصاريف ← تعديل الميزانيات.', '🏠 Two separate budgets: one for home and one for you. Home counts the "Home & family" category (and any you choose); the rest is yours, and the daily allowance comes from yours alone. Set them in Spending → Edit budgets.'],
@@ -2012,7 +2002,7 @@ const DEFAULT_STATE = {
   notifyOn:false, nPrice:true, nZakat:true, nBackup:true, zNotified:'', backupNotifiedAt:0,
   goalDate:'', nMonthly:true, monthlySent:'', reports:{}, yearReports:{},
   tx:[], customCats:[], budgets:{}, recurring:[], nBudget:true, lastAcct:'', transfers:[], spaces:[], spaceMain:'', spaceMainIcon:'', spaceMainBudget:'', lastSpace:'',
-  pending:[], merchantCats:{}, autoKnown:true, budgetTotal:'', homeBudget:'', homeCats:['family'],
+  pending:[], merchantCats:{}, autoKnown:true, budgetTotal:'', homeBudget:'', homeCats:['family'], dailyExcl:['rent','install','gamaeya'],
   deletedTx:[], deletedPending:[], deletedRec:[], deletedCats:[], hiddenCats:[], notes:[], notesSeenAt:0, notesClearedAt:0, _savedAt:0,
   nDebt:true, goals:[], deletedGoals:[], aiOn:false,
   loans:[], gamaeyas:[], deletedLoans:[], deletedGam:[], badges:{}, badgesInit:false,
@@ -4171,6 +4161,9 @@ const isHomeCat = id => homeCats().includes(id);
 const homeSpent = mk => monthTx(mk).filter(t=>t.type==='exp' && isHomeCat(t.cat)).reduce((a,t)=>a+txEgp(t),0);
 // zakat (t.zk) is a yearly duty, not monthly spending: it stays in the records but out of the personal budget
 const isPersonal = t => !isHomeCat(t.cat) && !t.zk;
+// fixed costs like rent come out of the month's budget but not out of "spent today": whole categories (chosen
+// in the budget sheet) or a single expense marked so (t.nd)
+const isDaily = t => isPersonal(t) && !t.nd && !(state.dailyExcl || []).includes(t.cat);
 const personalSpent = mk => monthTx(mk).filter(t=>t.type==='exp' && isPersonal(t)).reduce((a,t)=>a+txEgp(t),0);
 const INC_CATS = [
   {id:'salary', ar:'مرتب', en:'Salary', color:'#4fb08a'},
@@ -4205,6 +4198,7 @@ function addTx(t){
   const tx = {id: newId('t'), type:t.type, amount: num(t.amount), cur, egp: Math.round(num(t.amount) * (isFinite(r) ? r : 1) * 100) / 100,
               cat:t.cat, note:(t.note||'').trim(), date:t.date || today(), acct: row ? row.id : '', recId: t.recId || '', sp: t.sp || ''};
   if(t.zk) tx.zk = 1;
+  if(t.nd) tx.nd = 1;
   const spentBefore = tx.type==='exp' ? catSpent(tx.cat, monthOf(tx.date)) : 0;
   const home = tx.type==='exp' && isHomeCat(tx.cat);
   const totalBefore = tx.type==='exp' ? (home ? homeSpent : personalSpent)(monthOf(tx.date)) : 0;
@@ -4373,7 +4367,7 @@ function processRecurring(){
     for(let n = 0; n < 24 && mk <= cur; n++, mk = nextMonth(mk)){
       const date = `${mk}-${String(Math.min(rec.day, 28)).padStart(2,'0')}`;
       if(date > now) break;
-      addTx({type:rec.type, amount:rec.amount, cat:rec.cat, note:rec.note, acct:rec.acct, date, recId:rec.id, sp:rec.sp});
+      addTx({type:rec.type, amount:rec.amount, cat:rec.cat, note:rec.note, acct:rec.acct, date, recId:rec.id, sp:rec.sp, nd:rec.nd});
       rec.lastMonth = mk; added++;
     }
   }
@@ -4632,7 +4626,7 @@ function calmBudgetCard({inc, exp, expP, expH, bTotal, bHome}){
     if(day >= 5 && day < dim && expP > 0){
       // fixed costs (rent, instalments, savings circles, monthly repeats) are paid once, so only day-to-day spending is
       // stretched over the month
-      const fixed = monthTx(moneyMonth).filter(x=>x.type==='exp' && !isHomeCat(x.cat) && (x.recId || ['rent','install','gamaeya'].includes(x.cat))).reduce((a,x)=>a+txEgp(x),0);
+      const fixed = monthTx(moneyMonth).filter(x=>x.type==='exp' && isPersonal(x) && (x.recId || !isDaily(x))).reduce((a,x)=>a+txEgp(x),0);
       const end = fixed + (expP - fixed) / day * dim, diff = bTotal - end;
       pace = `<div class="cb-pace ${diff < 0 ? 'bad' : ''}">${diff >= 0
         ? L(`على المعدل دا هتقفل الشهر على حوالي <b class="m">${fmt(end,0)}</b>، أقل من ميزانيتك بـ <b class="m">${fmt(diff,0)}</b> 👍`, `At this pace you'll end the month around <b class="m">${fmt(end,0)}</b>, <b class="m">${fmt(diff,0)}</b> under budget 👍`)
@@ -4878,7 +4872,8 @@ function allowance(){
   const t = today(), mk = t.slice(0,7), dim = new Date(+mk.slice(0,4), +mk.slice(5,7), 0).getDate();
   // the daily allowance is from the personal budget, so only personal spending counts against it
   const exp = monthTx(mk).filter(x=>x.type==='exp' && isPersonal(x)), spentMonth = exp.reduce((a,x)=>a+txEgp(x),0);
-  const spentToday = exp.filter(x=>x.date===t).reduce((a,x)=>a+txEgp(x),0);
+  // excluded costs paid today (rent…) shrink the month's pool from today on, but aren't "spent today"
+  const spentToday = exp.filter(x=>x.date===t && isDaily(x)).reduce((a,x)=>a+txEgp(x),0);
   const daysLeft = dim - +t.slice(8) + 1, perDay = Math.max(0, (b - (spentMonth - spentToday)) / daysLeft);
   return {b, spentMonth, spentToday, perDay, leftToday: perDay - spentToday, daysLeft, leftMonth: b - spentMonth};
 }
@@ -4913,7 +4908,7 @@ function renderTodayCard(){
   for(const d of debtsDueSoon()) rows.push({go:'debts', icon:'📅', warn: d.left <= 1,
     text: L(`${/^قسط/.test(d.name) ? d.name : 'قسط ' + d.name} <b class="m">${egp(d.inst)}</b> ${d.left===0?'النهارده':d.left===1?'بكرة':`بعد ${fmt(d.left,0)} أيام`}`,
             `${esc(d.name)} <b class="m">${egp(d.inst)}</b> due ${d.left===0?'today':d.left===1?'tomorrow':`in ${d.left} days`}`)});
-  const a = allowance(), spent = monthTx(today().slice(0,7)).filter(x=>x.type==='exp' && x.date===today() && isPersonal(x)).reduce((s,x)=>s+txEgp(x),0);
+  const a = allowance(), spent = monthTx(today().slice(0,7)).filter(x=>x.type==='exp' && x.date===today() && isDaily(x)).reduce((s,x)=>s+txEgp(x),0);
   if(a) rows.push({go:'money', icon: a.leftToday < 0 ? '🔴' : '💸', warn: a.leftToday < 0,
     text: L(`صرفت النهارده <b class="m">${egp(spent)}</b> من <b class="m">${egp(a.perDay)}</b> المسموحين`, `Spent <b class="m">${egp(spent)}</b> of <b class="m">${egp(a.perDay)}</b> allowed today`)});
   else if(spent > 0) rows.push({go:'money', icon:'💸', text: L(`صرفت النهارده <b class="m">${egp(spent)}</b>`, `Spent <b class="m">${egp(spent)}</b> today`)});
@@ -4968,7 +4963,7 @@ function renderCalmHome(){
   const rows = [];
   if(state.pending.length) rows.push(`<button type="button" class="ch-row ch-hl" data-tday="pend"><span class="ch-ri amber"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="12" rx="2"/><path d="M4 8l8 5 8-5"/></svg></span><span class="ch-rt">${L(state.pending.length===1 ? 'رسالة بنك مستنية تصنيف' : state.pending.length===2 ? 'رسالتين بنك مستنيين تصنيف' : `${fmt(state.pending.length,0)} رسايل بنك مستنية تصنيف`, `${state.pending.length} bank message${state.pending.length>1?'s':''} to file`)}</span><span class="ch-go" aria-hidden="true">${L('‹','›')}</span></button>`);
   for(const d of debtsDueSoon()) rows.push(`<button type="button" class="ch-row" data-tday="debts"><span class="ch-ri blue"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><span class="ch-rt">${esc(/^قسط/.test(d.name) || LANG==='en' ? d.name : 'قسط ' + d.name)} <b class="m">${fmt(d.inst,0)}</b> ${d.left===0?L('النهارده','today'):d.left===1?L('بكرة','tomorrow'):L(`بعد ${fmt(d.left,0)} أيام`,`in ${d.left} days`)}</span><span class="ch-go" aria-hidden="true">${L('‹','›')}</span></button>`);
-  const a = allowance(), spent = monthTx(today().slice(0,7)).filter(x=>x.type==='exp' && x.date===today() && isPersonal(x)).reduce((s,x)=>s+txEgp(x),0);
+  const a = allowance(), spent = monthTx(today().slice(0,7)).filter(x=>x.type==='exp' && x.date===today() && isDaily(x)).reduce((s,x)=>s+txEgp(x),0);
   if(a) rows.push(`<button type="button" class="ch-row col" data-tday="money"><span class="ch-sp"><span>${L('صرفت النهارده','Spent today')}</span><span><b class="m">${fmt(spent,0)}</b> <span class="mu m">${L('من','of')} ${fmt(a.perDay,0)}</span></span></span>
     <span class="ch-bar"><span style="width:${Math.min(100, a.perDay > 0 ? spent/a.perDay*100 : 100)}%" class="${spent > a.perDay ? 'over' : ''}"></span></span></button>`);
   else if(spent > 0) rows.push(`<button type="button" class="ch-row" data-tday="money"><span class="ch-rt">${L('صرفت النهارده','Spent today')} <b class="m">${egp(spent)}</b></span><span class="ch-go" aria-hidden="true">${L('‹','›')}</span></button>`);
@@ -4984,16 +4979,7 @@ function renderCalmHome(){
       return `<button type="button" class="ch-a" data-ch="assets"><i style="background:${COLORS[s]}"></i><span class="mu">${short[s]}</span><b class="m">${compact(t[s])}</b>
         <span class="${p===null || Math.abs(p) < .05 ? 'mu' : p > 0 ? 'up-t' : 'down-t'}">${p===null || Math.abs(p) < .05 ? L('ثابت','steady') : `${p>0?'▲':'▼'} ${fmt(Math.abs(p),1)}${PCT()}`}</span></button>`; }).join('')}</div>
 ` : '';
-  // zakat and price alerts live here since the 2.0 bar has no room for them; shown even before any asset is added
-  const on = (state.alerts||[]).filter(a=>!a.done).length;
-  const alertsSub = on ? L(`${fmt(on,0)} شغالين`, `${fmt(on,0)} active`) : L('نبّهني لما سعر يوصل لرقم', 'Get told when a price hits a number');
-  document.getElementById('ch-assets').innerHTML += `<div class="ch-more">
-    <button type="button" data-ch="alerts"><span class="ic">${BELL_IC}</span><span style="min-width:0"><b>${L('تنبيهات الأسعار','Price alerts')}</b><small>${alertsSub}</small></span></button>
-    <button type="button" data-ch="zakat"><span class="ic">${ZAKAT_IC}</span><span style="min-width:0"><b>${L('الزكاة','Zakat')}</b><small>${L('احسب زكاة أموالك','Work out your zakat')}</small></span></button></div>`;
-  const al = document.getElementById('alerts-link-sub'); if(al) al.textContent = alertsSub;
 }
-const BELL_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20h4"/></svg>';
-const ZAKAT_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>';
 document.querySelector('.wrap').addEventListener('click', e=>{
   const b = e.target.closest('[data-ch]'); if(!b) return;
   const a = b.dataset.ch; buzz(6);
@@ -6117,6 +6103,7 @@ function quickPicks(type){
 function renderTxSheet(fresh){
   const d = txDraft, keep = id => fresh ? undefined : document.getElementById(id)?.value;
   const amt = keep('t-amt') ?? '', note = keep('t-note') ?? '', date = keep('t-date') || today(), rep = !fresh && document.getElementById('t-rep')?.checked || false;
+  const nd = !fresh && document.getElementById('t-nd')?.checked || false;
   if(d.type==='tr'){
     if(d.from===undefined){ d.from = bankAcct(); d.to = homeAcct(); }
     document.getElementById('sheet-title').textContent = L('تحويل بين حساباتك','Move money between accounts');
@@ -6144,6 +6131,9 @@ function renderTxSheet(fresh){
     ${fld(d.type==='exp' ? L('هتدفع منين؟','Paying from') : L('اتحط في','Paid into'), acctChips('acct', d.acct, true))}
     <div class="two">${fld(L('التاريخ','Date'), `<input id="t-date" type="date" value="${esc(date)}">`)}${fld(L('ملاحظة','Note'), `<input id="t-note" type="text" value="${esc(note)}" placeholder="${L('اختياري','optional')}">`)}</div>
     <label class="field" style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="t-rep" ${rep?'checked':''}> <span>${L('يتكرر كل شهر في نفس اليوم','Repeat every month on this day')}</span></label>
+    ${d.type!=='exp' || isHomeCat(d.cat) ? '' : (state.dailyExcl || []).includes(d.cat)
+      ? `<div class="note">${L('الفئة دي مستثناة من المصروف اليومي (بتتغيّر من تعديل الميزانيات).', 'This category is left out of daily spending (change it in Edit budgets).')}</div>`
+      : `<label class="field" style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="t-nd" ${nd?'checked':''}> <span>${L('استثنيه من المصروف اليومي (زي الإيجار)','Leave out of daily spending (like rent)')}</span></label>`}
     <button type="button" class="go-btn" data-txsave>${L('حفظ','Save')}</button>`;
 }
 function txSave(){
@@ -6152,9 +6142,11 @@ function txSave(){
   const date = document.getElementById('t-date').value || today(), note = document.getElementById('t-note').value;
   if(date > today()){ toast(L('التاريخ لسه ماجاش. اختار النهارده أو قبله.', 'That date is in the future. Pick today or earlier.')); return; }
   const acct = ensureWallet(document.getElementById('t-acct').value);
-  const tx = addTx({type:txDraft.type, amount, cat:txDraft.cat, acct, date, note, sp: txDraft.sp || ''});
+  const nd = !!document.getElementById('t-nd')?.checked;
+  const tx = addTx({type:txDraft.type, amount, cat:txDraft.cat, acct, date, note, sp: txDraft.sp || '', nd});
   if(document.getElementById('t-rep').checked){
     const rec = {id:newId('r'), type:tx.type, amount, cat:tx.cat, note:tx.note, acct, sp: tx.sp, day: +date.slice(8,10), start: date, lastMonth: monthOf(date)};
+    if(nd) rec.nd = 1;
     tx.recId = rec.id; state.recurring.push(rec);
   }
   state.lastAcct = acct; state.lastSpace = tx.sp; moneyMonth = monthOf(date);
@@ -6172,6 +6164,9 @@ function openBudgets(){
     <div class="field"><span>${L('الفئات اللي بتتحسب على البيت','Categories that count as home')}</span>
       <div class="chips" id="bud-homecats">${cats('exp').filter(c=>!KEEP_CATS.includes(c.id)).map(c=>`<button type="button" data-homecat="${c.id}" aria-pressed="${isHomeCat(c.id)}"><i style="background:${c.color}"></i>${esc(catName(c))}</button>`).join('')}</div>
       <span class="note">${L('كل حاجة تانية بتتحسب على ميزانيتك الشخصية، والمسموح بيه كل يوم بيتحسب منها بس.', 'Everything else counts against your own budget, and the daily allowance comes from it alone.')}</span></div>
+    <div class="field"><span>${L('مستثناة من المصروف اليومي','Left out of daily spending')}</span>
+      <div class="chips" id="bud-dailyx">${cats('exp').map(c=>`<button type="button" data-dailyx="${c.id}" aria-pressed="${(state.dailyExcl || []).includes(c.id)}"><i style="background:${c.color}"></i>${esc(catName(c))}</button>`).join('')}</div>
+      <span class="note">${L('المصاريف الثابتة زي الإيجار والأقساط بتتخصم من ميزانية الشهر، بس مش بتتحسب في «صرفت النهارده»، فالمسموح بيه كل يوم بيتوزّع على اللي فاضل بعدها.', 'Fixed costs like rent and instalments come out of the month\'s budget but not out of "spent today", so the daily allowance is spread over what\'s left after them.')}</span></div>
     <div class="bud-sum" id="bud-sum"></div>
     <div class="note">${L('وزّع ميزانيتك على الفئات لو حابب. سيب الخانة فاضية للفئات اللي مش عايز لها ميزانية.', 'Split your budget across categories if you like. Leave a category empty for no budget.')}</div>
     <div class="bud-edit">${cats('exp').map(c=>`<span><i style="background:${c.color}"></i>${esc(catName(c))}</span><input type="number" min="0" step="any" inputmode="decimal" data-bud="${c.id}" value="${esc(state.budgets[c.id] ?? '')}" placeholder="—">`).join('')}</div>
@@ -6240,11 +6235,13 @@ sheetBody.addEventListener('click', e=>{
     txDraft[f] = id; buzz(6); renderTxSheet();
   }
   else if(b.dataset.homecat){ b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')!=='true'); buzz(6); renderBudSum(); }
+  else if(b.dataset.dailyx){ b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')!=='true'); buzz(6); }
   else if(b.dataset.budsave!==undefined){
     sheetBody.querySelectorAll('[data-bud]').forEach(i=>{ const v = num(i.value); if(v > 0) state.budgets[i.dataset.bud] = v; else delete state.budgets[i.dataset.bud]; });
     const tot = num(document.getElementById('bud-total').value); state.budgetTotal = tot > 0 ? tot : '';
     const hb = num(document.getElementById('bud-home').value); state.homeBudget = hb > 0 ? hb : '';
     state.homeCats = [...sheetBody.querySelectorAll('[data-homecat][aria-pressed="true"]')].map(b=>b.dataset.homecat);
+    state.dailyExcl = [...sheetBody.querySelectorAll('[data-dailyx][aria-pressed="true"]')].map(b=>b.dataset.dailyx);
     save(); render(); sheet.close(); buzz(); toast(L('اتحفظت الميزانيات.', 'Budgets saved.'));
   }
 });

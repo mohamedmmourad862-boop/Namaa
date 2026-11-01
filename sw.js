@@ -1,7 +1,7 @@
 ﻿// Opens the app instantly from the saved copy, then checks for a newer version in the background.
 // This matters where the host is slow or blocked: the app never waits on the network to open.
 // Prices always come from the network (other sites, not handled here).
-const CACHE = 'wealth-shell-v49';
+const CACHE = 'wealth-shell-v50';
 const SHELL = ['./', './wealth.html', './manifest.webmanifest', './icons/logo.svg', './icons/badge-96.png', './icons/macrodroid.png',
   './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png'];
 
